@@ -1,9 +1,10 @@
 SolidusUserAddressBook
 ======================
 
-[WIP] Not ready for use.
+This extension allows registered users to manage multiple addresses from my account section. User can select billing and shipping address from this list on checkout.
 
-Introduction goes here.
+
+This extension is a solidus version of [spree_address_book extension](https://github.com/spree-contrib/spree_address_book)
 
 Installation
 ------------
@@ -38,4 +39,4 @@ Simply add this require statement to your spec_helper:
 require 'solidus_user_address_book/factories'
 ```
 
-Copyright (c) 2017 [name of extension creator], released under the New BSD License
+Copyright (c) 2017 [vinsol.com](http://vinsol.com "Ruby on Rails, iOS and Android developers"),  released under the New BSD License

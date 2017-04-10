@@ -26,8 +26,6 @@ Spree::Address.class_eval do
   def editable?
     # new_record? || (shipments.empty? && Spree::Order.complete.where("bill_address_id = ? OR ship_address_id = ?", self.id, self.id).count == 0)
     editable = ( new_record? || (Spree::Order.complete.where("bill_address_id = ? OR ship_address_id = ?", self.id, self.id).count == 0) )
-    self.instance_variable_set("@_skip_force_readonly", true) if editable
-    editable
   end
 
   def can_be_deleted?
@@ -47,18 +45,26 @@ Spree::Address.class_eval do
   end
 
     def readonly?
-      return false if self.instance_variable_get("@_skip_force_readonly")
-       persisted?
+      return false if skip_forced_readonly?
+      persisted?
     end
 
   # UPGRADE_CHECK if future versions of spree have a custom destroy function, this will break
   def destroy
     if can_be_deleted?
-      self.instance_variable_set("@_skip_force_readonly", true)
+      self.skip_forced_readonly
       super
     else
       update_column :deleted_at, Time.current
     end
+  end
+
+  def skip_forced_readonly?
+    self.instance_variable_get("@_skip_force_readonly")
+  end
+
+  def skip_forced_readonly
+    self.instance_variable_set("@_skip_force_readonly", true)
   end
 
   def check

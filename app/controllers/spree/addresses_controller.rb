@@ -30,6 +30,9 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def update
+    # Solidus considers persisted addresses as readonly. So hacking to make them editable in certain conditions.
+    @address.skip_forced_readonly
+    
     if @address.editable?
       if @address.update_attributes(address_params)
         flash[:notice] = I18n.t(:successfully_updated, scope: :address_book)
@@ -38,15 +41,17 @@ class Spree::AddressesController < Spree::StoreController
         render action: 'edit'
       end
     else
-      new_address = @address.clone
+      new_address = @address.dup
       new_address.attributes = address_params
-      @address.update_attribute(:deleted_at, Time.current)
-      if new_address.save
+      @address.deleted_at = Time.current
+      
+      if @address.save && new_address.save 
         flash[:notice] = I18n.t(:successfully_updated, scope: :address_book)
         redirect_back_or_default(account_path)
       else
         render action: 'edit'
       end
+
     end
   end
 
