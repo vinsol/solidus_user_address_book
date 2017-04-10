@@ -1,18 +1,18 @@
 <% @addresses = spree_current_user ? spree_current_user.addresses : [] %>
 
-<div class="row">
+<div >
   <% ['billing', 'shipping'].each do |address_type|
     next if address_type == 'billing' && SolidusUserAddressBook::Config[:disable_bill_address]
     address_name = "#{address_type[0...4]}_address" %>
-    <div class="col-sm-6" data-hook="<%= address_type %>_fieldset_wrapper">
-      <div class="panel panel-default" id="<%= address_type %>" data-hook>
-        <div class="panel-heading">
-          <h3 class="panel-title"><%= Spree.t(address_type + "_address") %></h3>
+    <div  data-hook="<%= address_type %>_fieldset_wrapper">
+      <div  id="<%= address_type %>" data-hook>
+        <div >
+          <h3 ><%= Spree.t(address_type + "_address") %></h3>
         </div>
-        <div class="panel-body">
+        <div >
           <% if address_type == 'shipping' && !SolidusUserAddressBook::Config[:disable_bill_address] %>
             <p class="field checkbox"  data-hook="use_billing">
-              <%= label_tag :order_use_billing, :id => 'use_billing' do %>
+              <%= label_tag :order_use_billing, id: 'use_billing' do %>
                 <%= check_box_tag 'order[use_billing]', '1', @order.shipping_eq_billing_address? %>
                 <%= Spree.t(:use_billing_address) %>
               <% end %>
@@ -23,20 +23,20 @@
             <p class="form-group">
               <% @addresses.each_with_index do |address, idx| %>
               <span id="<%= [address_type, dom_id(address)].join('_') %>">
-                <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= Spree.t(:edit) %></a><br />
+                <label><%= form.radio_button "#{address_name}_id", address.id, checked: (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= Spree.t(:edit) %></a><br />
               </span>
               <% end %>
-              <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
+              <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', scope: :address_book) %></label>
             </p>
           </div>
           <% end %>
           <%= form.fields_for address_name do |address_form| %>
             <div class="inner" data-hook=<%="#{address_type}_inner" %>>
-              <%= render :partial => 'spree/addresses/form', :locals => {
-                :address_name => address_name,
-                :address_form => address_form,
-                :address_type => address_type,
-                :address => Spree::Address.default
+              <%= render partial: 'spree/addresses/form', locals: {
+                address_name: address_name,
+                address_form: address_form,
+                address_type: address_type,
+                address: Spree::Address.default
               } %>
             </div>
           <% end %>
@@ -46,6 +46,6 @@
   <% end %>
 </div>
 
-<div class="well text-right form-buttons" data-hook="buttons">
-  <%= submit_tag Spree.t(:save_and_continue), :class => 'btn btn-lg btn-success' %>
+<div data-hook="buttons">
+  <%= submit_tag Spree.t(:save_and_continue), class: 'btn btn-lg btn-success' %>
 </div>

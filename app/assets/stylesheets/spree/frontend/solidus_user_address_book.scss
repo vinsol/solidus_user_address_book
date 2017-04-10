@@ -6,3 +6,26 @@ div#checkout #checkout_form_address {
 }
 
 .hidden { display: none; }
+
+div#new_address_link{
+	margin-top: 20px;
+}
+
+div#users-address-list-empty{
+	margin: 10px 0;
+}
+
+table#user_addresses{
+	width: 100%;
+}
+
+table#user_addresses td.action-btn{
+	width: 15%;
+	vertical-align: top;
+}
+
+a.btn-danger{
+	background: #c31a1a;
+	border: 1px solid #630f0f;
+
+}
