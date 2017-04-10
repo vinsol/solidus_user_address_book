@@ -9,7 +9,7 @@
         <td><%= address.to_s%></td>
         <td class = 'action-btn'>
           <%= link_to Spree.t(:edit), edit_address_path(address), class: :button %>&nbsp;
-          <%= link_to Spree.t(:remove), address_path(address), method: :delete, confirm: Spree.t(:are_you_sure), class: 'button btn-danger' %>
+          <%= link_to Spree.t(:remove), address_path(address), method: :delete, "data-confirm": Spree.t(:are_you_sure), class: 'button btn-danger' %>
         </td>
       </tr>
       <% end %>

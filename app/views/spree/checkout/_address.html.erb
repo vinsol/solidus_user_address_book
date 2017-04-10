@@ -20,24 +20,31 @@
           <% end %>
           <% if @addresses.present? %>
           <div class="select_address">
-            <p class="form-group">
+            <div class="form-group">
               <% @addresses.each_with_index do |address, idx| %>
+              <div class = 'address'>
               <span id="<%= [address_type, dom_id(address)].join('_') %>">
-                <label><%= form.radio_button "#{address_name}_id", address.id, checked: (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address"><%= Spree.t(:edit) %></a><br />
+                <label><%= form.radio_button "#{address_name}_id", address.id, checked: (address.id == spree_current_user["#{address_name}_id"] || idx == 0) %> <%= address %></label> <a href="<%= edit_address_path(address) %>" data-hook="edit_address">(<%= Spree.t(:edit) %>)</a><br />
               </span>
+              </div>
               <% end %>
-              <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', scope: :address_book) %></label>
-            </p>
+              <div class = 'address'>
+                <label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', scope: :address_book) %></label>
+              </div>
+                
+            </div>
           </div>
           <% end %>
           <%= form.fields_for address_name do |address_form| %>
             <div class="inner" data-hook=<%="#{address_type}_inner" %>>
+              <div class = 'address'> 
               <%= render partial: 'spree/addresses/form', locals: {
                 address_name: address_name,
                 address_form: address_form,
                 address_type: address_type,
                 address: Spree::Address.default
               } %>
+              </div>
             </div>
           <% end %>
         </div>

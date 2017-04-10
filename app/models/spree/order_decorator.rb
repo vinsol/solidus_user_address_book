@@ -85,6 +85,7 @@ Spree::Order.class_eval do
       attributes.delete(:id)
 
       if address && address.editable?
+        address.skip_forced_readonly
         address.update_attributes(attributes)
         return address
       else

@@ -40,9 +40,11 @@ if defined?(Spree::Frontend)
         @order.update_column(:bill_address_id, ship_address.id)
         bill_address.destroy
       else
+        bill_address.skip_forced_readonly
         bill_address.update_attribute(:user_id, spree_current_user.try(:id))
       end
 
+      ship_address.skip_forced_readonly
       ship_address.update_attribute(:user_id, spree_current_user.try(:id))
     end
   end
