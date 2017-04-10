@@ -1,13 +1,5 @@
 require 'spec_helper'
 
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/url_helpers'
-
-RSpec.configure do |config|
-  config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests
-end
-
 RSpec.describe Spree::CheckoutController, type: :controller do
   before(:each) do
     user = create(:user)
